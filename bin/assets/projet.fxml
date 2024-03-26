@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="985.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="acp.ImgControlle">
+   <children>
+      <VBox fx:id="vBox" layoutY="26.0" prefHeight="467.0" prefWidth="159.0" AnchorPane.bottomAnchor="131.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="826.0" AnchorPane.topAnchor="26.0">
+         <children>
+            <Label text="Image Ref" />
+            <ListView fx:id="listView" prefHeight="190.0" prefWidth="159.0" />
+            <ListView fx:id="eigenface" prefHeight="200.0" prefWidth="200.0" />
+            <Button fx:id="charat" mnemonicParsing="false" onAction="#comp" prefHeight="24.0" prefWidth="179.0" text="Comp" />
+            <Button fx:id="mean" mnemonicParsing="false" onAction="#imgMean" prefHeight="37.0" prefWidth="159.0" text="Image Moyen" />
+         </children>
+      </VBox>
+      <HBox fx:id="hBox" layoutY="510.0" prefHeight="58.0" prefWidth="985.0" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="510.0">
+         <children>
+            <Button fx:id="database" mnemonicParsing="false" onAction="#load" prefHeight="61.0" prefWidth="496.0" text="Load image test" />
+            <Button fx:id="facial" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#facial" prefHeight="61.0" prefWidth="559.0" text="facial recognition" />
+         </children>
+      </HBox>
+      <HBox fx:id="hBox1" layoutX="-2.0" layoutY="566.0" prefHeight="58.0" prefWidth="991.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="566.0">
+         <children>
+            <Label alignment="TOP_CENTER" prefHeight="58.0" prefWidth="948.0" text="Group 4">
+               <font>
+                  <Font size="47.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox fx:id="hBoxViewCourante" layoutX="549.0" layoutY="157.0" prefHeight="205.0" prefWidth="269.0" style="-fx-background-color: dark;" AnchorPane.bottomAnchor="261.0" AnchorPane.leftAnchor="549.0" AnchorPane.rightAnchor="162.0" AnchorPane.topAnchor="157.0">
+         <children>
+            <ImageView fx:id="imageView" fitHeight="206.0" fitWidth="274.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </HBox>
+      <MenuBar depthTest="ENABLE" prefHeight="27.0" prefWidth="985.0" AnchorPane.bottomAnchor="597.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <HBox fx:id="hBoxViewCourante1" layoutX="205.0" layoutY="157.0" prefHeight="205.0" prefWidth="269.0" style="-fx-background-color: dark;">
+         <children>
+            <ImageView fx:id="imageView1" fitHeight="206.0" fitWidth="274.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </HBox>
+      <TextArea fx:id="area" layoutX="599.0" layoutY="413.0" prefHeight="91.0" prefWidth="200.0" />
+   </children>
+</AnchorPane>

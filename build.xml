@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<project name="Projecting1" default="run" basedir=".">
+	<!-- Defining project properties -->
+	<property name="src.dir" value="./src"/>
+	<property name="bin.dir" value="./bin"/>
+	<property name="lib.dir" value="./lib"/>
+	<property name="jar.dir" value="./dist"/>
+	<property name="assets.dir" value="./assets"/>
+	<property name="css.dir" value="${assets}/css"/>
+	<property name="fxml.dir" value="${assets}/fxml"/>
+	<property name="prog.name" value="FacialRecognition"/>
+	<property name="main-class" value="acp.Main"/>
+	<property name="jar.file" value="${prog.name}.jar"/>
+
+	<!-- Defining project classpath -->
+	<path id="project.classpath">
+		<pathelement location="${bin.dir}"/>
+	</path>
+
+	<path id="libraries.path">    
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+
+	<path id="assets.path">
+		<fileset dir="${assets.dir}">
+			<include name="**/*.css"/>
+			<include name="**/*.fxml"/>
+		</fileset>
+	</path>
+
+	<target name="check-bin">
+		<available file="${bin.dir}" property="${bin.dir}.present"/>
+	</target>
+
+	<target name="check-jar">
+		<available file="${jar.dir}" property="${jar.dir}.present"/>
+	</target>
+
+	<target name="delete-bin" depends="check-bin" if="${bin.dir}.present">
+		<delete dir="${bin.dir}" includeEmptyDirs="true"/>
+	</target>
+
+	<target name="delete-jar" depends="check-jar" if="${jar.dir}.present">
+		<delete dir="${jar.dir}" includeEmptyDirs="true"/>
+	</target>
+
+	<target name="clean" description="Delete old files" depends="delete-bin, delete-jar"/>
+
+	<target name="bin" description="Making bin directory">
+		<mkdir dir="${bin.dir}"/>
+	</target>
+
+	<target name="dist" description="Making dist directory">
+		<mkdir dir="${jar.dir}"/>
+	</target>
+ 
+	<target name="compile" description="Compiling classes" depends="clean, bin">
+		<echo message="Compiling..."/>
+		<mkdir dir="${bin.dir}/${assets.dir}"/>
+		<copy todir="${bin.dir}/${assets.dir}" flatten="true">
+			<path refid="assets.path"/>
+		</copy>
+		<javac srcdir="${src.dir}" 
+				destdir="${bin.dir}" 
+				debug="on" 
+				optimize="on" 
+				deprecation="on"
+				includeAntRuntime="false">
+			<classpath refid="project.classpath"/>
+			<classpath refid="libraries.path"/>
+		</javac>
+		<echo message="Project compiled."/>
+	</target>
+
+	<target name="jar" description="Creating executable jar file" depends="compile, dist">
+		<mkdir dir="${bin.dir}/${lib.dir}"/>
+		<copy todir="${bin.dir}/${lib.dir}" flatten="true">
+			<path refid="libraries.path"/>
+		</copy>
+		<manifestclasspath property="manifest.classpath" jarfile="${jar.file}">
+			<classpath refid="libraries.path"/>
+		</manifestclasspath>
+		<jar destfile="${jar.dir}/${jar.file}" basedir="${bin.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}"/>
+				<attribute name="Class-Path" value="${manifest.classpath}"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="run" description="Running the program" depends="compile">
+		<java classname="${main-class}" fork="true">
+			<classpath refid="project.classpath"/>
+			<classpath refid="libraries.path"/>
+			<jvmarg value="--module-path=${lib.dir}/javafx-18.0.1"/>
+			<jvmarg value="--add-modules=javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.media,javafx.swing,javafx.web"/>
+		</java>
+	</target>
+
+	<target name="runJar" description="Running the Jar archive" depends="jar">
+		<java jar="${jar.dir}/${jar.file}" fork="true">
+			<jvmarg value="-Djava.library.path=lib/natives-win" />
+		</java>
+	</target>
+
+	<target name="doc" description="Making documentation">
+		<mkdir dir="doc"/>
+		<javadoc sourcepath="${src.dir}" destpath="doc">
+			<classpath refid="libraries.path"/>
+		</javadoc>
+	</target>
+</project>
